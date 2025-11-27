@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+
+  <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+
+
+<h3>Appointments</h3>
+<table id="appointmentsTable">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Student No</th>
+      <th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+
+<h3>Users</h3>
+<table id="usersTable">
+  <thead>
+    <tr>
+      <th>Name</th><th>Email</th><th>Student No</th>
+      <th>Contact</th><th>Year</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<button id="logoutBtn">Logout</button>
+
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+
+<script src="admin.js"></script>
+
+<script src="logout.js"></script>
+
+</body>
+</html>

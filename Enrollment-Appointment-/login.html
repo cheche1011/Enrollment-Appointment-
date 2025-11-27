@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login / Sign Up - Enrollment System</title>
+  <link rel="stylesheet" href="login-style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="toggle">
+        <button id="showSignIn" class="active">Sign In</button>
+        <button id="showSignUp">Sign Up</button>
+      </div>
+
+    
+      <form id="signInForm" class="form active">
+        <h2>Sign In</h2>
+        <input id="inEmail" type="email" placeholder="Email" required />
+        <input id="inPassword" type="password" placeholder="Password" required />
+
+        <div class="captcha-row">
+          <div id="inCaptcha" class="captcha-box"></div>
+          <button type="button" id="inRefresh" class="mini">↻</button>
+        </div>
+        <input id="inCaptchaInput" type="text" placeholder="Enter captcha" required />
+
+        <select id="userType" required>
+          <option value="">Select User Type</option>
+          <option value="student">Student</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <button type="submit" class="primary">Login</button>
+        <p id="inMsg" class="msg"></p>
+      </form>
+
+      
+      <form id="signUpForm" class="form">
+        <h2>Create Account</h2>
+        <input id="upUsername" type="text" placeholder="Username" required />
+        <input id="upEmail" type="email" placeholder="Email" required />
+        <input id="upPassword" type="password" placeholder="Password" required />
+
+        <div class="captcha-row">
+          <div id="upCaptcha" class="captcha-box"></div>
+          <button type="button" id="upRefresh" class="mini">↻</button>
+        </div>
+        <input id="upCaptchaInput" type="text" placeholder="Enter captcha" required />
+
+        <button type="submit" class="primary">Sign Up</button>
+        <p id="upMsg" class="msg"></p>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="login-firebase.js"></script>
+</body>
+</html>

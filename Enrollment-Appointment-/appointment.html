@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment</title>
+</head>
+<body>
+
+  <h2>Book Appointment</h2>
+
+  <form id="appointmentForm">
+    <label>Name:</label>
+    <input type="text" id="appName" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" id="appEmail" required><br><br>
+
+    <label>Student Number:</label>
+    <input type="text" id="appNumber" required><br><br>
+
+    <label>Date:</label>
+    <input type="date" id="appDate" required><br><br>
+
+    <label>Time:</label>
+    <input type="time" id="appTime" required><br><br>
+
+    <button type="submit">Submit Appointment</button>
+  </form>
+
+  <p id="appointmentMsg" style="color: green; margin-top: 10px;"></p>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCvx4pBrQyzjUGRzaHftYxIfrI5VcW0YtA",
+      authDomain: "enrollmentappointment.firebaseapp.com",
+      projectId: "enrollmentappointment",
+      storageBucket: "enrollmentappointment.firebasestorage.app",
+      messagingSenderId: "1001070153862",
+      appId: "1:1001070153862:web:416c41958c1660a5f54107",
+      measurementId: "G-2Q0MRLZV6F",
+      databaseURL: "https://enrollmentappointment-default-rtdb.firebaseio.com/"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+   
+    document.getElementById("appointmentForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("appName").value;
+      const email = document.getElementById("appEmail").value;
+      const number = document.getElementById("appNumber").value;
+      const date = document.getElementById("appDate").value;
+      const time = document.getElementById("appTime").value;
+
+      db.ref("appointments").push({
+        name,
+        email,
+        number,
+        date,
+        time,
+        status: "Pending",
+        timestamp: Date.now()
+      }).then(() => {
+        document.getElementById("appointmentMsg").textContent = "✔ Appointment submitted!";
+        document.getElementById("appointmentForm").reset();
+      }).catch(err => {
+        alert("Error: " + err);
+      });
+    });
+  </script>
+</body>
+</html>

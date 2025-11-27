@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="student-dashboard.css" />
+  
+  <style>
+    .today {
+      background-color: #ffeb3b;
+      font-weight: bold;
+      text-align: center;
+    }
+    table#calendar td {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .confirmation {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#appointment">Appointment</a>
+      <a href="#profile">Profile</a>
+      <a href="#" id="logoutBtn" class="logout-btn">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+   
+    <section id="home">
+      <h2>Welcome! Start Your Future at Fulbright College!</h2>
+      <h2>​Easily book your enrollment appointment now. Secure your slot and complete your admission process efficiently.</h2>
+
+      <div class="home-flex">
+        <div class="calendar-container">
+          <h3>📅 Academic Calendar</h3>
+          <input type="month" id="calendarMonth" value="2025-11">
+          <table id="calendar">
+            <thead>
+              <tr>
+                <th colspan="7" id="monthLabel"></th>
+              </tr>
+              <tr>
+                <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+              </tr>
+            </thead>
+            <tbody id="calendarBody"></tbody>
+          </table>
+        </div>
+
+        <div class="contact">
+          <h3>📞 Contact Us</h3>
+          <form id="contactForm">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit">Send Message</button>
+            <p id="contactMsg" class="confirmation"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  
+    <section id="appointment">
+      <h2>Book an Appointment</h2>
+      <form id="appointmentForm">
+        <input type="text" id="appointmentName" placeholder="Full Name" required>
+        <input type="email" id="appointmentEmail" placeholder="Email" required>
+        <input type="text" id="appointmentNumber" placeholder="Student Number" required>
+        <input type="date" id="appointmentDate" required>
+        <input type="time" id="appointmentTime" required>
+        <div class="appointment-buttons">
+          <button type="submit" id="bookAppointmentBtn">Book Appointment</button>
+          <button type="button" id="cancelAppointmentBtn" disabled>Cancel</button>
+          <button type="button" id="rescheduleAppointmentBtn" disabled>Reschedule</button>
+        </div>
+        <p id="appointmentMsg" class="confirmation"></p>
+      </form>
+    </section>
+
+ 
+    <section id="profile">
+      <h2>Student Profile</h2>
+      <form id="profileForm">
+        <input type="text" id="studentName" placeholder="Full Name" required>
+        <input type="email" id="studentEmail" placeholder="Email" required>
+        <input type="text" id="studentNumber" placeholder="Student Number" required>
+        <input type="tel" id="studentContact" placeholder="Contact Number" required>
+        <input type="text" id="studentCourse" placeholder="Course" required>
+        <input type="text" id="studentYear" placeholder="Year Level" required>
+        <button type="submit">Update Profile</button>
+        <p id="profileMsg" class="confirmation"></p>
+      </form>
+    </section>
+  </main>
+
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function generateCalendar(monthValue) {
+        const today = new Date();
+        let year, month;
+
+        if(monthValue){
+          [year, month] = monthValue.split('-').map(Number);
+          month = month - 1;
+        } else {
+          year = today.getFullYear();
+          month = today.getMonth();
+        }
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+
+        const monthNames = [
+          "January","February","March","April","May","June",
+          "July","August","September","October","November","December"
+        ];
+
+        document.getElementById("monthLabel").innerText = `${monthNames[month]} ${year}`;
+
+        const calendarBody = document.getElementById("calendarBody");
+        calendarBody.innerHTML = "";
+
+        let date = 1;
+
+        for(let i = 0; i < 6; i++){
+          const row = document.createElement("tr");
+
+          for(let j = 0; j < 7; j++){
+            const cell = document.createElement("td");
+
+            if(i === 0 && j < firstDay) cell.innerHTML = "";
+            else if(date > lastDate) cell.innerHTML = "";
+            else {
+              cell.innerHTML = date;
+              if(date === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
+                cell.classList.add("today");
+              }
+              date++;
+            }
+
+            row.appendChild(cell);
+          }
+
+          calendarBody.appendChild(row);
+        }
+      }
+
+      const calendarMonth = document.getElementById("calendarMonth");
+      calendarMonth.addEventListener("change", (e) => generateCalendar(e.target.value));
+      generateCalendar(calendarMonth.value);
+    });
+  </script>
+
+  
+  <script src="student-dashboard.js"></script>
+
+ 
+  <script src="logout.js"></script>
+</body>
+</html>
